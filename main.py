@@ -1,19 +1,10 @@
 
-# coding: utf-8
-
-# In[1]:
-
-
-import os
 import cv2
 import numpy as np
 import tensorflow.compat.v1 as tf
 import BKNetStyle
 from const import *
 from mtcnn.mtcnn import MTCNN
-
-
-# In[2]:
 
 
 def load_network():
@@ -23,21 +14,15 @@ def load_network():
     print('Restore model')
     saver = tf.train.Saver()
     saver.restore(
-        sess, '/Users/admin/Development/Dev/ComputerVision/SmileDetection/save/current/model.ckpt')
+        sess, './save/20210107/model.ckpt')
     print('OK')
     return sess, x, y_smile_conv, phase_train, keep_prob
-
-
-# In[3]:
 
 
 def draw_label(image, x, y, w, h, label, font=cv2.FONT_HERSHEY_SIMPLEX, font_scale=1, thickness=2):
     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 155, 255), 2)
     cv2.putText(image, label, (x, y), font,
                 font_scale, (255, 255, 255), thickness)
-
-
-# In[4]:
 
 
 def main(sess, x, y_smile_conv,  phase_train, keep_prob):
@@ -85,7 +70,8 @@ def main(sess, x, y_smile_conv,  phase_train, keep_prob):
         predict_y_smile_conv = sess.run(y_smile_conv, feed_dict={
                                         x: test_img, phase_train: False, keep_prob: 1})
 
-        smile_label = "-_-" if np.argmax(predict_y_smile_conv) == 0 else ":)"
+        smile_label = "not miling" if np.argmax(
+            predict_y_smile_conv) == 0 else "smiling"
 
         label = "{}".format(smile_label)
         draw_label(original_img, x_coordinate, y_coordinate,
@@ -96,9 +82,6 @@ def main(sess, x, y_smile_conv,  phase_train, keep_prob):
 
         if key == 27:
             break
-
-
-# In[5]:
 
 
 if __name__ == '__main__':
