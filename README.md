@@ -6,13 +6,13 @@ pip3 install -r requirements.txt
 ```
 **Preprocess data**
 <li>Change input image folder and output image folder in file preprocess.py</li>
-<li>Run preprocessing using command below:</li>
+<li>Run preprocessing using command below:</li><br>
 ```bash
 python3 preprocess.py
 ```
 **Run demo**
 <li>Change path to model if your model path is different</li>
-<li>Run main programe using command below:</li>
+<li>Run main programe using command below:</li><br>
 ```bash
 python3 main.py
 ```
